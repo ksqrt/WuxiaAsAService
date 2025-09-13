@@ -1,0 +1,15 @@
+FROM eclipse-temurin:17-jdk
+
+WORKDIR /app
+
+# 미리 래퍼·의존성만 받아서 캐시
+COPY .mvn/ .mvn
+COPY mvnw pom.xml ./
+RUN chmod +x mvnw && ./mvnw -q -DskipTests dependency:go-offline
+
+# 개발 모드 기본값
+ENV SPRING_PROFILES_ACTIVE=dev
+ENV JAVA_TOOL_OPTIONS="-XX:MaxRAMPercentage=75"
+
+# 컨테이너 안에서 스프링을 실행 (소스는 compose로 마운트)
+CMD ["./mvnw","spring-boot:run","-Dspring-boot.run.profiles=dev","-Dspring-boot.run.fork=false"]
