@@ -10,6 +10,6 @@ public class HelloController {
 
   @GetMapping("/api/hello")
   public String hello() {
-    return "hello from spring: " + OffsetDateTime.now();
+    return "helloㅇㅇddd from  : " + OffsetDateTime.now();
   }
 }
