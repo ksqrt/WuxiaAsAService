@@ -1,9 +1,8 @@
 services:
   - type: web
     name: wuxia-as-a-service
+    env: docker
     plan: free
-    buildCommand: ./mvnw clean package -DskipTests
-    startCommand: java -jar target/app-service-0.0.1-SNAPSHOT.jar
     healthCheckPath: /
     envVars:
       - key: SERVER_PORT
