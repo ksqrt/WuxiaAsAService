@@ -2,16 +2,17 @@
 FROM maven:3.8.5-openjdk-17 AS build
 WORKDIR /app
 
-# Copy project files and give execution permission to mvnw
+# Copy project files
 COPY .mvn/ .mvn
 COPY mvnw pom.xml ./
-RUN chmod +x ./mvnw
 
-# Download dependencies
-RUN ./mvnw dependency:go-offline
+# Make mvnw executable and download dependencies in a single layer
+RUN chmod +x ./mvnw && ./mvnw dependency:go-offline
 
-# Copy source code and build the application
+# Copy source code
 COPY src ./src
+
+# Build the application
 RUN ./mvnw clean package -DskipTests
 
 # Stage 2: Create the final, smaller image
