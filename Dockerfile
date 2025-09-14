@@ -7,7 +7,7 @@ COPY .mvn/ .mvn
 COPY mvnw pom.xml ./
 
 # Make mvnw executable and download dependencies in a single layer
-RUN chmod +x ./mvnw && ./mvnw dependency:go-offline
+RUN sed -i 's/$//' ./mvnw && chmod +x ./mvnw && ./mvnw dependency:go-offline
 
 # Copy source code
 COPY src ./src
